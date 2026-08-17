@@ -48,6 +48,38 @@
   input, select, textarea{font-family:inherit;}
   .container{max-width:1180px; margin:0 auto; padding:0 24px;}
 
+  /* ---------- Announcement Ticker ---------- */
+  .announcement-bar {
+    background: var(--purple-deep);
+    color: var(--cream);
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--purple-mid);
+    position: relative;
+    z-index: 50;
+  }
+  .ticker-track {
+    display: inline-flex;
+    white-space: nowrap;
+    animation: ticker 25s linear infinite;
+  }
+  .ticker-track:hover {
+    animation-play-state: paused; /* يتيح إيقاف الحركة عند اللمس أو التمرير فوقه */
+  }
+  .ticker-item {
+    padding: 0 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(50%); }
+  }
+
   /* ---------- Buttons ---------- */
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -324,7 +356,7 @@
   @media (max-width:520px){ .field-row{ grid-template-columns:1fr; } }
 
   .summary-card h3{ font-size:20px; margin-bottom:18px; }
-  .summary-item{ display:flex; justify-content:space-between; gap:10px; padding:12px 0; border-bottom:1.5px dashed var(--line); font-size:14px; }
+  .summary-item{ display:flex; justify-content:space-between; gap:10px; padding:12px 0; border-bottom:1px dashed var(--line); font-size:14px; }
   .summary-item .si-name{ font-weight:700; color:var(--purple-deep); }
   .summary-item .si-meta{ color:var(--purple-mid); font-size:12.5px; }
   .summary-total{ display:flex; justify-content:space-between; align-items:center; font-weight:800; color:var(--purple-deep); font-size:18px; margin-top:18px; padding-top:16px; border-top:1.5px solid var(--purple-deep); }
@@ -353,7 +385,21 @@
   .whatsapp-float:hover{ transform:translateY(-3px); box-shadow:0 10px 28px rgba(37,211,102,0.5); }
   .whatsapp-float svg{ flex-shrink:0; }
 
-  /* ---------- Intro animation — pure CSS, works everywhere ---------- */
+  /* ---------- Product detail block ---------- */
+  .pd-detail-block{ margin-top:28px; }
+  .pd-detail-intro{
+    font-size:14.5px; line-height:1.95; color:var(--ink);
+    background:var(--pink-soft); border-right:4px solid var(--purple-mid);
+    padding:14px 16px; border-radius:var(--radius-sm); margin-bottom:16px;
+  }
+  .pd-benefits{ list-style:none; margin-bottom:16px; }
+  .pd-benefits li{ font-size:14px; color:var(--ink); padding:7px 0; border-bottom:1px dashed var(--line); line-height:1.7; }
+  .pd-benefits li:last-child{ border-bottom:none; }
+  .pd-meta{ list-style:none; }
+  .pd-meta li{ font-size:13.5px; color:#6b5a7c; padding:6px 0; line-height:1.7; }
+  .pd-meta li strong{ color:var(--purple-deep); }
+
+  /* ---------- Intro animation ---------- */
   @keyframes circleRise{
     0%  { transform:translateY(110vh) scaleX(0.55); opacity:0; border-radius:50%; }
     30% { transform:translateY(15vh)  scaleX(1.18); opacity:1; border-radius:44% 56% 58% 42% / 50% 40% 60% 50%; }
@@ -370,7 +416,7 @@
     background:var(--white);
     display:flex; align-items:center; justify-content:center;
     pointer-events:none;
-    animation: fadeIn 0s 2.8s both reverse;
+    animation: fadeIn 0.45s ease 2.5s reverse both;
   }
   #intro-overlay.gone{ display:none; }
 
@@ -408,15 +454,12 @@
   #intro-features-fade .feature-chip:nth-child(3){ animation-delay:1.66s; }
   #intro-features-fade .feature-chip:nth-child(4){ animation-delay:1.78s; }
 
-  #intro-overlay{
-    animation: fadeIn 0.45s ease 2.5s reverse both;
-  }
-
   ::-webkit-scrollbar{ width:8px; }
   ::-webkit-scrollbar-thumb{ background:var(--purple-bg); border-radius:8px; }
 
   @media (max-width:600px){
     .hero{ height:44vh; min-height:300px; }
+    .hero-title{ font-size:28px; }
     .logo-circle{ width:150px; height:150px; }
     .logo-circle .logo-text{ font-size:36px; }
     .logo-wrap{ margin-top:-38px; }
@@ -455,6 +498,17 @@
 
   <!-- ============ HOME PAGE ============ -->
   <section id="page-home" class="page active">
+    
+    <!-- ===== ANNOUNCEMENT TICKER ===== -->
+    <div class="announcement-bar">
+      <div class="ticker-track">
+        <span class="ticker-item">🎉 خصم 15 جنيه على كل صابونة بمناسبة افتتاح المتجر حتى يوم الجمعة 21 أغسطس 💜</span>
+        <span class="ticker-item">🎉 خصم 15 جنيه على كل صابونة بمناسبة افتتاح المتجر حتى يوم الجمعة 21 أغسطس 💜</span>
+        <span class="ticker-item">🎉 خصم 15 جنيه على كل صابونة بمناسبة افتتاح المتجر حتى يوم الجمعة 21 أغسطس 💜</span>
+        <span class="ticker-item">🎉 خصم 15 جنيه على كل صابونة بمناسبة افتتاح المتجر حتى يوم الجمعة 21 أغسطس 💜</span>
+      </div>
+    </div>
+
     <div class="hero" id="intro-hero-fade">
       <div class="hero-media-placeholder" id="hero-media"></div>
     </div>
@@ -495,7 +549,7 @@
   <!-- ============ PRODUCT DETAIL PAGE ============ -->
   <section id="page-product" class="page">
     <div class="container product-detail">
-      <div class="breadcrumb" onclick="navigate('home')">
+      <div class="breadcrumb" onclick="handleBackNavigation()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         العودة للمنتجات
       </div>
@@ -597,7 +651,6 @@
 
 </main>
 
-<!-- ============ CART DRAWER ============ -->
 <a class="whatsapp-float" href="https://wa.me/201050591215" target="_blank" aria-label="تواصل معنا على واتساب">
   <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.3-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.1.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.4.1-.2 0-.4 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2 0 1.3.9 2.5 1.1 2.7.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.1.1-1.3 0-.1-.2-.2-.5-.3z"/><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
   تواصل معنا
@@ -622,6 +675,7 @@
   </div>
 </div>
 
+<!-- ============ CART DRAWER ============ -->
 <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
 <aside class="cart-drawer" id="cart-drawer">
   <div class="cart-header">
@@ -645,7 +699,7 @@
 
 <script>
 /* =========================================================================
-   إعدادات الصور وروابط المنتجات
+   إعدادات الصور
    ========================================================================= */
 const HERO_IMAGE = "https://i.ibb.co/JWCd669D/IMG-20260817-084551.png";
 const LOGO_IMAGE  = "https://i.ibb.co/Psks0pSt/1-20260723-222523-0000.png";
@@ -655,6 +709,9 @@ const PRODUCT_IMAGE_FRANKINCENSE  = "https://i.ibb.co/mF9mQ8gP/3-20260811-225937
 
 const WHATSAPP_NUMBER = "201050591215";
 
+/* =========================================================================
+   بيانات المنتجات
+   ========================================================================= */
 const SIZES_TEMPLATE = [
   { size: "75", label: "75 جرام", price: 65, oldPrice: 80 },
   { size: "100", label: "100 جرام", price: 85, oldPrice: 100 }
@@ -724,7 +781,7 @@ const PRODUCTS = [
 ];
 
 /* =========================================================================
-   الحالة العامة والدوال الأساسية
+   الحالة العامة
    ========================================================================= */
 let cart = [];
 let currentProductId = null;
@@ -739,12 +796,12 @@ const placeholderIcon = `
     <span>صورة المنتج</span>
   </div>`;
 
-function mediaBlock(imageUrl){
-  return imageUrl ? `<img src="${imageUrl}" alt="">` : placeholderIcon;
-}
-
-function navigate(page, productId){
+/* =========================================================================
+   التنقل بين الصفحات وتاريخ المتصفح (Routing & History)
+   ========================================================================= */
+function showPageDOM(page, productId){
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  
   if(page === 'home'){
     document.getElementById('page-home').classList.add('active');
   } else if(page === 'product'){
@@ -758,36 +815,75 @@ function navigate(page, productId){
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
-function renderHome(){
-  const heroMedia = document.getElementById('hero-media');
-  if(heroMedia) heroMedia.innerHTML = HERO_IMAGE ? `<img src="${HERO_IMAGE}" alt="عبق">` : "";
+function navigate(page, productId, push = true){
+  showPageDOM(page, productId);
   
+  if (push) {
+    let hash = page === 'home' ? '' : `#${page}` + (productId ? `-${productId}` : '');
+    history.pushState({ page: page, productId: productId }, "", window.location.pathname + hash);
+  }
+}
+
+function handleBackNavigation(){
+  history.back();
+}
+
+window.addEventListener('popstate', function(event) {
+  if (event.state && event.state.page) {
+    showPageDOM(event.state.page, event.state.productId);
+  } else {
+    handleHashNavigation();
+  }
+});
+
+function handleHashNavigation(){
+  const hash = window.location.hash.replace('#', '');
+  if(hash.startsWith('product-')){
+    const pId = hash.replace('product-', '');
+    showPageDOM('product', pId);
+  } else if(hash === 'checkout'){
+    showPageDOM('checkout');
+  } else {
+    showPageDOM('home');
+  }
+}
+
+/* =========================================================================
+   الصفحة الرئيسية — عرض المنتجات
+   ========================================================================= */
+function mediaBlock(imageUrl){
+  return imageUrl ? `<img src="${imageUrl}" alt="">` : placeholderIcon;
+}
+
+function renderHome(){
+  document.getElementById('hero-media').innerHTML = HERO_IMAGE ? `<img src="${HERO_IMAGE}" alt="عبق">` : "";
   const logoCircle = document.getElementById('logo-circle');
-  if(logoCircle && LOGO_IMAGE){
+  if(LOGO_IMAGE){
     logoCircle.innerHTML = `<img src="${LOGO_IMAGE}" alt="عبق">`;
   }
 
   const grid = document.getElementById('products-grid');
-  if(grid){
-    grid.innerHTML = PRODUCTS.map(p => {
-      const s1 = p.sizes[0], s2 = p.sizes[1];
-      return `
-      <div class="product-card" onclick="navigate('product','${p.id}')">
-        <div class="product-media">${mediaBlock(p.image)}</div>
-        <div class="product-info">
-          <h3>${p.name}</h3>
-          <div class="badge-offer">عرض افتتاحي</div>
-          <div class="product-price">${s1.price} / ${s2.price} جنيه</div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
-            <button class="btn btn-outline" style="flex:1;min-width:110px;font-size:13px;padding:11px 14px;" onclick="event.stopPropagation(); navigate('product','${p.id}')">عرض المنتج</button>
-            <button class="btn btn-primary" style="flex:1;min-width:110px;font-size:13px;padding:11px 14px;" onclick="event.stopPropagation(); openQA('${p.id}')">أضف للعربة 🛒</button>
-          </div>
+  grid.innerHTML = PRODUCTS.map(p => {
+    const s1 = p.sizes[0], s2 = p.sizes[1];
+    return `
+    <div class="product-card" onclick="navigate('product','${p.id}')">
+      <div class="product-media">${mediaBlock(p.image)}</div>
+      <div class="product-info">
+        <h3>${p.name}</h3>
+        <div class="badge-offer">عرض افتتاحي</div>
+        <div class="product-price">${s1.price} / ${s2.price} جنيه</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+          <button class="btn btn-outline" style="flex:1;min-width:110px;font-size:13px;padding:11px 14px;" onclick="event.stopPropagation(); navigate('product','${p.id}')">عرض المنتج</button>
+          <button class="btn btn-primary" style="flex:1;min-width:110px;font-size:13px;padding:11px 14px;" onclick="event.stopPropagation(); openQA('${p.id}')">أضف للعربة 🛒</button>
         </div>
-      </div>`;
-    }).join('');
-  }
+      </div>
+    </div>`;
+  }).join('');
 }
 
+/* =========================================================================
+   صفحة المنتج
+   ========================================================================= */
 function openProduct(id){
   const p = PRODUCTS.find(x => x.id === id);
   if(!p) return;
@@ -797,9 +893,7 @@ function openProduct(id){
 
   document.getElementById('pd-media').innerHTML = mediaBlock(p.image);
   document.getElementById('pd-title').textContent = p.name;
-  const descEl = document.getElementById('pd-desc'); 
-  descEl.style.display = p.desc ? 'block' : 'none'; 
-  descEl.textContent = p.desc;
+  const descEl = document.getElementById('pd-desc'); descEl.style.display = p.desc ? 'block' : 'none'; descEl.textContent = p.desc;
   document.getElementById('qty-val').textContent = currentQty;
 
   document.getElementById('size-options').innerHTML = p.sizes.map(s => `
@@ -825,6 +919,9 @@ function changeQty(delta){
   document.getElementById('qty-val').textContent = currentQty;
 }
 
+/* =========================================================================
+   العربة
+   ========================================================================= */
 function addToCart(){
   const p = PRODUCTS.find(x => x.id === currentProductId);
   const sizeObj = p.sizes.find(s => s.size === selectedSize);
@@ -872,14 +969,11 @@ function cartCount(){
 function renderCart(){
   const badge = document.getElementById('cart-badge');
   const count = cartCount();
-  if(badge){
-    badge.style.display = count > 0 ? 'flex' : 'none';
-    badge.textContent = count;
-  }
+  badge.style.display = count > 0 ? 'flex' : 'none';
+  badge.textContent = count;
 
   const itemsEl = document.getElementById('cart-items');
   const footerEl = document.getElementById('cart-footer');
-  if(!itemsEl || !footerEl) return;
 
   if(cart.length === 0){
     itemsEl.innerHTML = `
@@ -929,6 +1023,9 @@ function goToCheckout(){
   navigate('checkout');
 }
 
+/* =========================================================================
+   صفحة إتمام الطلب
+   ========================================================================= */
 function renderCheckoutSummary(){
   const el = document.getElementById('checkout-items');
   el.innerHTML = cart.map(i => `
@@ -1002,6 +1099,9 @@ ${phone}
   window.open(url, '_blank');
 }
 
+/* =========================================================================
+   التوست
+   ========================================================================= */
 let toastTimer;
 function showToast(msg){
   const t = document.getElementById('toast');
@@ -1011,6 +1111,9 @@ function showToast(msg){
   toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
 }
 
+/* =========================================================================
+   Quick-Add Popup
+   ========================================================================= */
 let qaProductId = null;
 let qaSelectedSize = null;
 let qaQty = 1;
@@ -1066,13 +1169,19 @@ function qaAddToCart(){
 }
 
 /* =========================================================================
-   تشغيل أولي آمن بعد تحميل الصفحة بالكامل
+   تشغيل أولي
    ========================================================================= */
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   renderHome();
   renderCart();
+
+  history.replaceState({ page: 'home' }, "", window.location.pathname + window.location.hash);
+  handleHashNavigation();
 });
 
+/* =========================================================================
+   أنيميشن الافتتاح
+   ========================================================================= */
 (function runIntro(){
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
