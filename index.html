@@ -99,34 +99,14 @@
   @keyframes fadeIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
 
   /* ---------- Hero ---------- */
-  .hero{
-    position:relative; width:100%; height:56vh; min-height:380px; max-height:560px;
-    background:linear-gradient(135deg, var(--purple-bg-soft), var(--purple-bg) 55%, #9C82BC);
-    display:flex; align-items:center; overflow:hidden;
-  }
-  .hero::before{
-    content:""; position:absolute; inset:0;
-    background:
-      radial-gradient(circle at 15% 20%, rgba(255,255,255,0.18), transparent 40%),
-      radial-gradient(circle at 85% 75%, rgba(239,166,192,0.28), transparent 45%);
-  }
-  .hero-content{ position:relative; z-index:2; width:100%; text-align:center; padding:0 20px; }
-  .hero-eyebrow{
-    display:inline-flex; align-items:center; gap:8px; background:rgba(76,53,101,0.85); color:var(--cream);
-    padding:12px 26px; border-radius:999px; font-family:'Aref Ruqaa',serif; font-size:22px; margin-bottom:18px;
-    box-shadow:0 6px 18px rgba(0,0,0,0.15);
-  }
-  .hero-title{ font-size:38px; color:var(--cream); text-shadow:0 4px 18px rgba(76,53,101,0.35); }
-  .hero-sub{ color:var(--cream); opacity:.92; font-size:15px; margin-top:10px; font-weight:400; }
-  .hero-media-placeholder{
-    position:absolute; inset:0; z-index:1;
-    background:linear-gradient(135deg, rgba(255,255,255,0.06), rgba(0,0,0,0.06));
-    display:flex; align-items:flex-end; justify-content:center;
-  }
-  .hero-media-placeholder img{ width:100%; height:100%; object-fit:cover; }
+  .hero{ position:relative; width:100%; line-height:0; }
+  .hero-media-placeholder{ width:100%; }
+  .hero-media-placeholder img{ width:100%; height:auto; display:block; }
+  .hero-content{ display:none; }
+  .hero::before{ display:none; }
 
   /* ---------- Logo overlap circle ---------- */
-  .logo-wrap{ position:relative; display:flex; justify-content:center; margin-top:-90px; z-index:10; }
+  .logo-wrap{ position:relative; display:flex; justify-content:center; margin-top:-58px; z-index:10; }
   .logo-circle{
     width:230px; height:230px; border-radius:50%;
     background:var(--purple-deep);
@@ -142,13 +122,16 @@
 
   /* ---------- Feature strip ---------- */
   .features-strip{
-    display:flex; justify-content:center; flex-wrap:wrap; gap:14px 34px;
+    display:grid; grid-template-columns:repeat(4,1fr);
+    gap:18px 12px;
     margin:34px auto 0; padding:0 20px 8px;
+    max-width:680px;
   }
-  .feature-chip{ display:flex; flex-direction:column; align-items:center; gap:8px; color:var(--purple-deep); font-size:13px; font-weight:700; }
+  .feature-chip{ display:flex; flex-direction:column; align-items:center; gap:8px; color:var(--purple-deep); font-size:13px; font-weight:700; text-align:center; }
+  .feature-chip .label{ line-height:1.4; }
   .feature-chip .icon{
     width:44px; height:44px; border-radius:50%; background:var(--pink-soft);
-    display:flex; align-items:center; justify-content:center; color:var(--purple-deep);
+    display:flex; align-items:center; justify-content:center; color:var(--purple-deep); flex-shrink:0;
   }
 
   /* ---------- Products section ---------- */
@@ -230,8 +213,8 @@
   .acc-icon{ font-size:18px; transition:transform .25s ease; color:var(--purple-mid); }
   .acc-item.open .acc-icon{ transform:rotate(45deg); }
   .acc-body{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
-  .acc-item.open .acc-body{ max-height:260px; }
-  .acc-body p{ padding:0 4px 18px; color:#6b5a7c; font-size:14px; line-height:1.9; }
+  .acc-item.open .acc-body{ max-height:300px; }
+  .acc-body p{ padding:0 4px 18px; color:#6b5a7c; font-size:14px; line-height:1.9; white-space: pre-line; }
 
   /* ---------- Cart Drawer ---------- */
   .cart-overlay{
@@ -303,29 +286,12 @@
   @media (max-width:520px){ .field-row{ grid-template-columns:1fr; } }
 
   .summary-card h3{ font-size:20px; margin-bottom:18px; }
-  .summary-item{ display:flex; justify-content:space-between; gap:10px; padding:12px 0; border-bottom:1px dashed var(--line); font-size:14px; }
+  .summary-item{ display:flex; justify-content:space-between; gap:10px; padding:12px 0; border-bottom:1.5px dashed var(--line); font-size:14px; }
   .summary-item .si-name{ font-weight:700; color:var(--purple-deep); }
   .summary-item .si-meta{ color:var(--purple-mid); font-size:12.5px; }
   .summary-total{ display:flex; justify-content:space-between; align-items:center; font-weight:800; color:var(--purple-deep); font-size:18px; margin-top:18px; padding-top:16px; border-top:1.5px solid var(--purple-deep); }
   .whatsapp-btn{ margin-top:24px; background:#3f8f5c; color:#fff; }
   .whatsapp-btn:hover{ background:#357a4d; }
-
-  /* ---------- Floating WhatsApp ---------- */
-  .whatsapp-float{
-    position:fixed; bottom:24px; left:24px; z-index:999;
-    display:flex; align-items:center; gap:10px;
-    background:#25D366; color:#fff; text-decoration:none;
-    padding:12px 18px 12px 12px; border-radius:999px;
-    box-shadow:0 8px 22px rgba(37,211,102,0.42);
-    font-weight:700; font-size:14.5px;
-    transition:transform .18s ease, box-shadow .18s ease;
-  }
-  .whatsapp-float:hover{ transform:translateY(-2px); box-shadow:0 12px 28px rgba(37,211,102,0.55); }
-  .whatsapp-float svg{ width:26px; height:26px; flex-shrink:0; }
-  @media (max-width:480px){
-    .whatsapp-float{ bottom:16px; left:16px; padding:12px; }
-    .whatsapp-float span{ display:none; }
-  }
 
   /* ---------- Footer ---------- */
   .site-footer{ background:var(--purple-deep); color:var(--cream); padding:44px 0 26px; margin-top:20px; }
@@ -333,6 +299,21 @@
   .footer-brand{ font-family:'Aref Ruqaa',serif; font-size:30px; }
   .footer-tag{ font-size:13px; color:var(--pink-soft); opacity:.9; }
   .footer-copy{ font-size:12px; color:rgba(248,241,223,0.55); margin-top:16px; }
+
+  .whatsapp-float{
+    position:fixed; bottom:28px; right:24px; z-index:80;
+    display:flex; align-items:center; gap:10px;
+    background:#25D366; color:#fff;
+    padding:13px 20px 13px 16px;
+    border-radius:999px;
+    box-shadow:0 6px 22px rgba(37,211,102,0.4);
+    font-weight:700; font-size:14px;
+    cursor:pointer;
+    transition:transform .2s ease, box-shadow .2s ease;
+    text-decoration:none;
+  }
+  .whatsapp-float:hover{ transform:translateY(-3px); box-shadow:0 10px 28px rgba(37,211,102,0.5); }
+  .whatsapp-float svg{ flex-shrink:0; }
 
   ::-webkit-scrollbar{ width:8px; }
   ::-webkit-scrollbar-thumb{ background:var(--purple-bg); border-radius:8px; }
@@ -342,7 +323,7 @@
     .hero-title{ font-size:28px; }
     .logo-circle{ width:150px; height:150px; }
     .logo-circle .logo-text{ font-size:36px; }
-    .logo-wrap{ margin-top:-60px; }
+    .logo-wrap{ margin-top:-38px; }
     .checkout-title{ font-size:26px; }
     .pd-title{ font-size:26px; }
   }
@@ -372,11 +353,6 @@
   <section id="page-home" class="page active">
     <div class="hero">
       <div class="hero-media-placeholder" id="hero-media"></div>
-      <div class="hero-content">
-        <div class="hero-eyebrow">عبَق</div>
-        <h1 class="hero-title">دلالٌ طبيعيٌ تستحقّينه</h1>
-        <p class="hero-sub">صابون طبيعي مصنوع بحب، خالٍ من العطور الصناعية والبارابين</p>
-      </div>
     </div>
 
     <div class="logo-wrap">
@@ -389,16 +365,16 @@
     <div class="features-strip">
       <div class="feature-chip"><span class="icon">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      </span>مصنوع بحب</div>
+      </span><span class="label">مصنوع<br>بحب</span></div>
       <div class="feature-chip"><span class="icon">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg>
-      </span>خالٍ من العطور</div>
+      </span><span class="label">خالٍ من<br>العطور</span></div>
       <div class="feature-chip"><span class="icon">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg>
-      </span>غني بالجلسرين</div>
+      </span><span class="label">غني<br>بالجلسرين</span></div>
       <div class="feature-chip"><span class="icon">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22c6-4 9-8 9-13a9 9 0 1 0-18 0c0 5 3 9 9 13z"/></svg>
-      </span>مكونات طبيعية</div>
+      </span><span class="label">مكونات<br>طبيعية</span></div>
     </div>
 
     <section class="products-section">
@@ -518,6 +494,11 @@
 </main>
 
 <!-- ============ CART DRAWER ============ -->
+<a class="whatsapp-float" href="https://wa.me/201050591215" target="_blank" aria-label="تواصل معنا على واتساب">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.3-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.1.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.4.1-.2 0-.4 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2 0 1.3.9 2.5 1.1 2.7.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.1.1-1.3 0-.1-.2-.2-.5-.3z"/><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+  تواصل معنا
+</a>
+
 <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
 <aside class="cart-drawer" id="cart-drawer">
   <div class="cart-header">
@@ -539,26 +520,20 @@
   </div>
 </footer>
 
-<a class="whatsapp-float" href="https://wa.me/201050591215" target="_blank" rel="noopener" aria-label="تواصل معنا عبر واتساب">
-  <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16.004 3C9.377 3 4 8.373 4 15c0 2.373.694 4.583 1.898 6.44L4 29l7.75-1.86A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3Zm0 21.75c-1.98 0-3.83-.55-5.41-1.5l-.388-.23-4.6 1.1 1.13-4.48-.253-.4A9.72 9.72 0 0 1 5.25 15c0-5.94 4.82-10.75 10.754-10.75S26.75 9.06 26.75 15 20.94 24.75 16.004 24.75Zm5.98-7.99c-.328-.164-1.94-.957-2.24-1.066-.3-.11-.518-.164-.737.164-.218.328-.845 1.066-1.036 1.285-.19.219-.382.246-.71.082-.328-.164-1.384-.51-2.636-1.626-.975-.868-1.633-1.94-1.824-2.268-.19-.328-.02-.505.144-.668.148-.147.328-.383.492-.574.164-.192.218-.328.328-.547.11-.219.055-.41-.027-.574-.082-.164-.737-1.775-1.01-2.43-.266-.64-.537-.554-.737-.564-.19-.008-.41-.01-.628-.01-.219 0-.574.082-.874.41-.3.328-1.147 1.12-1.147 2.73 0 1.61 1.174 3.164 1.338 3.383.164.219 2.31 3.527 5.6 4.945.782.338 1.393.54 1.868.69.785.25 1.5.215 2.065.13.63-.094 1.94-.793 2.212-1.559.273-.766.273-1.422.19-1.559-.082-.137-.3-.219-.628-.383Z"/></svg>
-  <span>تواصل معنا</span>
-</a>
-
 <script>
 /* =========================================================================
-   إعدادات الصور — ضعي روابط الصور هنا بعد رفعها على الاستضافة
-   استبدلي القيمة الفارغة "" برابط الصورة فقط، بدون تعديل أي كود آخر
+   إعدادات الصور
    ========================================================================= */
-const HERO_IMAGE = "https://i.ibb.co/NQDY09Y/20260724-003406-0000.png";                 // صورة الغلاف الرئيسي
-const LOGO_IMAGE  = "https://i.ibb.co/Psks0pSt/1-20260723-222523-0000.png";                 // صورة شعار عبق الدائري
-const PRODUCT_IMAGE_LICORICE      = "https://i.ibb.co/N2n6wKjX/1-20260811-225936-0000.png"; // صابونة العرقسوس
-const PRODUCT_IMAGE_COFFEE        = "https://i.ibb.co/ns81MPGv/2-20260811-225937-0001.png"; // صابونة القهوة
-const PRODUCT_IMAGE_FRANKINCENSE  = "https://i.ibb.co/mF9mQ8gP/3-20260811-225937-0002.png"; // صابونة لبان الذكر
+const HERO_IMAGE = "https://i.ibb.co/JWCd669D/IMG-20260817-084551.png";                 
+const LOGO_IMAGE  = "https://i.ibb.co/Psks0pSt/1-20260723-222523-0000.png";                 
+const PRODUCT_IMAGE_LICORICE      = "https://i.ibb.co/N2n6wKjX/1-20260811-225936-0000.png"; 
+const PRODUCT_IMAGE_COFFEE        = "https://i.ibb.co/ns81MPGv/2-20260811-225937-0001.png"; 
+const PRODUCT_IMAGE_FRANKINCENSE  = "https://i.ibb.co/mF9mQ8gP/3-20260811-225937-0002.png"; 
 
 const WHATSAPP_NUMBER = "201050591215";
 
 /* =========================================================================
-   بيانات المنتجات — يمكن إضافة منتجات جديدة بسهولة بإضافة عنصر جديد هنا
+   بيانات المنتجات مع الأوصاف الجديدة
    ========================================================================= */
 const SIZES_TEMPLATE = [
   { size: "75", label: "75 جرام", price: 65, oldPrice: 80 },
@@ -570,36 +545,42 @@ const PRODUCTS = [
     id: "licorice",
     name: "صابونة العرقسوس",
     image: PRODUCT_IMAGE_LICORICE,
-    desc: "صابونة طبيعية بخلاصة العرقسوس، تُصنع يدويًا بعناية بمكونات مختارة بعيدًا عن المواد الصناعية.",
+    desc: "خلاصة العرقسوس غنية بمواد فعالة طبيعية بتشتغل على تقليل صبغة الميلانين وتوحيد لون البشرة بفعالية، وبتساعد على تخفيف التصبغات وآثار الحبوب بالتدريج وبأمان تام على حاجز البشرة 💜🌸",
     sizes: SIZES_TEMPLATE,
     info: {
-      usage: "بلّلي الصابونة بالماء الدافئ ودلّكيها برفق على البشرة حتى تتكوّن رغوة ناعمة، ثم اشطفي جيدًا بالماء. يمكن استخدامها يوميًا للوجه والجسم.",
-      ingredients: "زيت الزيتون، زيت جوز الهند، ماء، خلاصة العرقسوس، مكونات طبيعية أخرى. (نص قابل للتعديل لاحقًا حسب التركيبة الفعلية)",
-      instructions: "احفظي الصابونة في مكان جاف بعيدًا عن تجمّع المياه بين الاستخدامات، ويُفضّل استخدام صحن صابون مثقّب لإطالة عمرها."
+      usage: `🌸 توحيد لون البشرة والتغلب على التصبغات والبقع الداكنة الناتجة عن الشمس وآثار الحبوب.
+🌸 تنظيف عميق للبشرة مع الحفاظ على ترطيبها ومنحها إشراقة ونعومة فورية.
+🌸 تهدئة البشرة وتقليل أي التهابات أو احمرار بفضل خصائصها الطبيعية اللطيفة.`,
+      ingredients: "خلاصة العرقسوس، فيتامين هـ، زيت جوز الهند، ماء ورد، عسل نحل، بانثينول، قاعدة صابون جلسرين.",
+      instructions: "مرتين يومياً صباحاً ومساءً، ونندلك دقيقا عشان يمتص وكده."
     }
   },
   {
     id: "coffee",
     name: "صابونة القهوة",
     image: PRODUCT_IMAGE_COFFEE,
-    desc: "صابونة طبيعية بمسحوق القهوة، تمنح البشرة إحساسًا منعشًا مع ملمس ناعم عند الاستخدام.",
+    desc: "غنية بمضادات الأكسدة القوية والكافيين اللي بينشط الدورة الدموية في البشرة، وبيقبض الأوعية الدموية عشان يقلل الانتفاخات والورم الصباحي ويدي البشرة صحيان ونضارة فورية 💜🌸",
     sizes: SIZES_TEMPLATE,
     info: {
-      usage: "بلّلي الصابونة بالماء الدافئ ودلّكيها برفق على البشرة حتى تتكوّن رغوة ناعمة، ثم اشطفي جيدًا بالماء. يمكن استخدامها يوميًا للوجه والجسم.",
-      ingredients: "زيت الزيتون، زيت جوز الهند، ماء، مسحوق القهوة الطبيعي، مكونات طبيعية أخرى. (نص قابل للتعديل لاحقًا حسب التركيبة الفعلية)",
-      instructions: "احفظي الصابونة في مكان جاف بعيدًا عن تجمّع المياه بين الاستخدامات، ويُفضّل استخدام صحن صابون مثقّب لإطالة عمرها."
+      usage: `🌸 محاربة الإجهاد اليومي وعوامل التلوث وحماية خلايا البشرة بفضل مضادات الأكسدة القوية.
+🌸 تنشيط الدورة الدموية وتقليل انتفاخات الوجه والعيون ومنح البشرة نضارة وGlow fوري.
+🌸 تنظيف البشرة وإنعاشها بعمق وترطيبها بدون أي جفاف لتكون مرتاحة وناعمة طوال اليوم.`,
+      ingredients: "خلاصة القهوة، فيتامين هـ، زيت جوز الهند، ماء ورد، عسل نحل، بانثينول، قاعدة صابون جلسرين.",
+      instructions: "مرتين يومياً صباحاً ومساءً، ونندلك دقيقا عشان يمتص وكده."
     }
   },
   {
     id: "frankincense",
     name: "صابونة لبان الذكر",
     image: PRODUCT_IMAGE_FRANKINCENSE,
-    desc: "صابونة طبيعية بخلاصة لبان الذكر، تُحضّر يدويًا بمكونات نقية ورائحة هادئة مميزة.",
+    desc: "تحتوي على حمض البوسويليك الفعال اللي بيحفز إنتاج الكولاجين الطبيعي في البشرة، وبيتغلغل بعمق عشان يشد الجلد ويحارب الخطوط الدقيقة بانتظام للحفاظ على شباب البشرة ومرونتها 💜🌸",
     sizes: SIZES_TEMPLATE,
     info: {
-      usage: "بلّلي الصابونة بالماء الدافئ ودلّكيها برفق على البشرة حتى تتكوّن رغوة ناعمة، ثم اشطفي جيدًا بالماء. يمكن استخدامها يوميًا للوجه والجسم.",
-      ingredients: "زيت الزيتون، زيت جوز الهند، ماء، خلاصة لبان الذكر، مكونات طبيعية أخرى. (نص قابل للتعديل لاحقًا حسب التركيبة الفعلية)",
-      instructions: "احفظي الصابونة في مكان جاف بعيدًا عن تجمّع المياه بين الاستخدامات، ويُفضّل استخدام صحن صابون مثقّب لإطالة عمرها."
+      usage: `🌸 تحفيز إنتاج الكولاجين الطبيعي لشد البشرة وتقليل مظهر الخطوط الدقيقة والتجاعيد.
+🌸 منح البشرة صفاء ونقاء زجاجي وتفتيح وتوحيد لونها بمظهر صحي ومنور.
+🌸 تنظيف البشرة بعمق وفعالية مع ضمان نعومتها ومرونتها بدون أي إحساس بالشد.`,
+      ingredients: "خلاصة لبان الذكر، فيتامين هـ، زيت جوز الهند، ماء ورد، عسل نحل، بانثينول، قاعدة صابون جلسرين.",
+      instructions: "مرتين يومياً صباحاً ومساءً، ونندلك دقيقا عشان يمتص وكده."
     }
   }
 ];
@@ -607,7 +588,7 @@ const PRODUCTS = [
 /* =========================================================================
    الحالة العامة
    ========================================================================= */
-let cart = [];              // {key, productId, name, size, sizeLabel, price, qty, image}
+let cart = [];              
 let currentProductId = null;
 let selectedSize = null;
 let currentQty = 1;
@@ -693,7 +674,7 @@ function openProduct(id){
 
   document.getElementById('pd-accordion').innerHTML = `
     <div class="acc-item">
-      <button class="acc-header" onclick="toggleAcc(this)">الاستخدام <span class="acc-icon">+</span></button>
+      <button class="acc-header" onclick="toggleAcc(this)">الفوائد والمميزات <span class="acc-icon">+</span></button>
       <div class="acc-body"><p>${p.info.usage}</p></div>
     </div>
     <div class="acc-item">
@@ -701,7 +682,7 @@ function openProduct(id){
       <div class="acc-body"><p>${p.info.ingredients}</p></div>
     </div>
     <div class="acc-item">
-      <button class="acc-header" onclick="toggleAcc(this)">التعليمات <span class="acc-icon">+</span></button>
+      <button class="acc-header" onclick="toggleAcc(this)">طريقة الاستخدام <span class="acc-icon">+</span></button>
       <div class="acc-body"><p>${p.info.instructions}</p></div>
     </div>
   `;
