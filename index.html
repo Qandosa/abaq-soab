@@ -367,38 +367,68 @@
   .pd-meta li{ font-size:13.5px; color:#6b5a7c; padding:6px 0; line-height:1.7; }
   .pd-meta li strong{ color:var(--purple-deep); }
 
-  /* ---------- Intro animation overlay ---------- */
+  /* ---------- Intro animation — pure CSS, works everywhere ---------- */
+  @keyframes circleRise{
+    0%  { transform:translateY(110vh) scaleX(0.55); opacity:0; border-radius:50%; }
+    30% { transform:translateY(15vh)  scaleX(1.18); opacity:1; border-radius:44% 56% 58% 42% / 50% 40% 60% 50%; }
+    55% { transform:translateY(0)     scaleX(0.90); opacity:1; border-radius:48% 52% 46% 54% / 54% 46% 54% 46%; }
+    75% { transform:translateY(0)     scaleX(1.04); opacity:1; border-radius:52% 48% 52% 48% / 48% 52% 48% 52%; }
+    100%{ transform:translateY(0)     scaleX(1);    opacity:1; border-radius:50%; }
+  }
+  @keyframes fadeIn   { from{opacity:0} to{opacity:1} }
+  @keyframes scaleIn  { from{opacity:0;transform:scale(0.7)} to{opacity:1;transform:scale(1)} }
+  @keyframes slideUp  { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
   #intro-overlay{
     position:fixed; inset:0; z-index:999;
     background:var(--white);
     display:flex; align-items:center; justify-content:center;
-    flex-direction:column;
     pointer-events:none;
+    /* fades out after all animations done */
+    animation: fadeIn 0s 2.8s both reverse;
   }
-  #intro-overlay.done{ opacity:0; transition:opacity .4s ease .1s; pointer-events:none; }
+  #intro-overlay.gone{ display:none; }
 
-  /* The animated circle that rises */
   #intro-circle{
     width:220px; height:220px; border-radius:50%;
     background:var(--purple-deep);
     position:absolute;
-    transform:translateY(120vh) scaleX(0.6);
     opacity:0;
+    animation: circleRise 0.95s cubic-bezier(.4,0,.2,1) 0.05s both;
   }
   #intro-logo-img{
     width:100%; height:100%; border-radius:50%; object-fit:cover;
-    opacity:0; transition:opacity .3s ease;
+    opacity:0;
+    animation: fadeIn 0.35s ease 0.75s both;
   }
   #intro-ring{
     position:absolute;
     width:240px; height:240px; border-radius:50%;
     border:7px solid var(--cream);
     box-shadow:0 18px 36px rgba(76,53,101,0.3);
-    opacity:0; transform:scale(0.8);
+    opacity:0;
+    animation: scaleIn 0.32s ease-out 0.88s both;
   }
-  /* Hero & features hide during intro */
-  #intro-hero-fade{ opacity:0; }
-  #intro-features-fade > *{ opacity:0; transform:translateY(14px); }
+
+  /* hero hidden until its turn */
+  #intro-hero-fade{
+    opacity:0;
+    animation: fadeIn 0.45s ease 1.15s both;
+  }
+  /* feature chips stagger */
+  #intro-features-fade .feature-chip{
+    opacity:0;
+    animation: slideUp 0.3s ease-out both;
+  }
+  #intro-features-fade .feature-chip:nth-child(1){ animation-delay:1.42s; }
+  #intro-features-fade .feature-chip:nth-child(2){ animation-delay:1.54s; }
+  #intro-features-fade .feature-chip:nth-child(3){ animation-delay:1.66s; }
+  #intro-features-fade .feature-chip:nth-child(4){ animation-delay:1.78s; }
+
+  /* overlay itself fades out last */
+  #intro-overlay{
+    animation: fadeIn 0.45s ease 2.5s reverse both;
+  }
 
   ::-webkit-scrollbar{ width:8px; }
   ::-webkit-scrollbar-thumb{ background:var(--purple-bg); border-radius:8px; }
@@ -1044,49 +1074,4 @@ function openQA(id){
     </div>
   `).join('');
   document.getElementById('qa-overlay').classList.add('active');
-  document.getElementById('qa-box').classList.add('active');
-}
-
-function closeQA(){
-  document.getElementById('qa-overlay').classList.remove('active');
-  document.getElementById('qa-box').classList.remove('active');
-}
-
-function qaSelectSize(size){
-  qaSelectedSize = size;
-  document.querySelectorAll('.qa-size-opt').forEach(el => {
-    el.classList.toggle('selected', el.dataset.size === size);
-  });
-}
-
-function qaChangeQty(delta){
-  qaQty = Math.max(1, qaQty + delta);
-  document.getElementById('qa-qty-val').textContent = qaQty;
-}
-
-function qaAddToCart(){
-  const p = PRODUCTS.find(x => x.id === qaProductId);
-  const sizeObj = p.sizes.find(s => s.size === qaSelectedSize);
-  const key = p.id + '-' + sizeObj.size;
-  const existing = cart.find(i => i.key === key);
-  if(existing){ existing.qty += qaQty; }
-  else {
-    cart.push({ key, productId:p.id, name:p.name, size:sizeObj.size, sizeLabel:sizeObj.label, price:sizeObj.price, qty:qaQty, image:p.image });
-  }
-  renderCart();
-  closeQA();
-  showToast('تمت إضافة المنتج إلى العربة');
-}
-
-renderHome();
-renderCart();
-
-/* =========================================================================
-   أنيميشن الافتتاح
-   ========================================================================= */
-(function runIntro(){
-  // Water drop sound
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    function dropSound(){
-  
+  document.getElemen
