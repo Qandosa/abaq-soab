@@ -167,14 +167,52 @@
   }
   .product-info .btn{ margin-top:6px; }
 
+  /* ---------- Quick-add popup ---------- */
+  .qa-overlay{
+    position:fixed; inset:0; background:rgba(58,42,71,0.5); z-index:85;
+    opacity:0; pointer-events:none; transition:opacity .25s ease;
+  }
+  .qa-overlay.active{ opacity:1; pointer-events:auto; }
+  .qa-box{
+    position:fixed; bottom:0; left:0; right:0; z-index:86;
+    background:var(--white); border-radius:24px 24px 0 0;
+    padding:28px 24px 36px;
+    transform:translateY(100%); transition:transform .35s cubic-bezier(.4,0,.2,1);
+    box-shadow:0 -10px 40px rgba(76,53,101,0.18);
+  }
+  .qa-box.active{ transform:translateY(0); }
+  .qa-box-header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+  .qa-box-header h4{ font-size:20px; color:var(--purple-deep); }
+  .qa-close{ font-size:20px; color:var(--purple-mid); width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  .qa-close:hover{ background:var(--pink-soft); }
+  .qa-size-label{ font-size:13px; font-weight:700; color:var(--purple-deep); margin-bottom:10px; }
+  .qa-sizes{ display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap; }
+  .qa-size-opt{
+    flex:1; min-width:130px; border:2px solid var(--line); border-radius:var(--radius-md);
+    padding:12px 14px; text-align:center; cursor:pointer; transition:all .18s ease; position:relative;
+    background:var(--white);
+  }
+  .qa-size-opt.selected{ border-color:var(--purple-deep); background:var(--pink-soft); }
+  .qa-size-opt .qsz-badge{ position:absolute; top:-9px; left:50%; transform:translateX(-50%); background:var(--pink); color:var(--purple-deep); font-size:10px; font-weight:700; padding:2px 9px; border-radius:999px; white-space:nowrap; }
+  .qa-size-opt .qsz-label{ font-weight:700; color:var(--purple-deep); font-size:14px; }
+  .qa-size-opt .qsz-price{ font-weight:900; color:var(--purple-deep); font-size:13px; margin-top:4px; }
+  .qa-size-opt .qsz-old{ color:#B7A6C6; text-decoration:line-through; font-size:11px; margin-inline-start:4px; font-weight:400; }
+  .qa-bottom{ display:flex; align-items:center; gap:16px; }
+  .qa-qty{ display:flex; align-items:center; border:2px solid var(--line); border-radius:999px; overflow:hidden; }
+  .qa-qty button{ width:40px; height:40px; font-size:20px; color:var(--purple-deep); font-weight:700; }
+  .qa-qty button:hover{ background:var(--pink-soft); }
+  .qa-qty span{ width:36px; text-align:center; font-weight:700; font-size:15px; }
+  .qa-add-btn{ flex:1; }
+
   /* ---------- Product Detail Page ---------- */
-  .product-detail{ padding:36px 0 80px; }
-  .pd-grid{ display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:flex-start; }
+  .product-detail{ padding:36px 24px 80px; max-width:1100px; margin:0 auto; }
+  .pd-grid{ display:grid; grid-template-columns:1fr 1fr; gap:44px; align-items:flex-start; }
   @media (max-width:860px){ .pd-grid{ grid-template-columns:1fr; gap:28px; } }
   .pd-media{
     aspect-ratio:1/1; background:linear-gradient(160deg, var(--pink-soft), var(--cream));
     border:1.5px dashed var(--purple-bg); border-radius:var(--radius-lg);
     display:flex; align-items:center; justify-content:center; overflow:hidden;
+    max-width:420px; width:100%; margin:0 auto;
   }
   .pd-media img{ width:100%; height:100%; object-fit:cover; }
   .breadcrumb{ font-size:13px; color:var(--purple-mid); margin-bottom:16px; cursor:pointer; display:inline-flex; gap:6px; align-items:center;}
@@ -201,7 +239,7 @@
   .qty-counter button:hover{ background:var(--pink-soft); }
   .qty-counter .qty-val{ width:44px; text-align:center; font-weight:700; font-size:16px; }
 
-  .add-cart-btn{ font-size:16px; padding:16px 30px; }
+  .add-cart-btn{ font-size:15px; padding:14px 24px; max-width:340px; }
 
   /* Accordion */
   .accordion{ margin-top:34px; border-top:1px solid var(--line); }
@@ -213,8 +251,8 @@
   .acc-icon{ font-size:18px; transition:transform .25s ease; color:var(--purple-mid); }
   .acc-item.open .acc-icon{ transform:rotate(45deg); }
   .acc-body{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
-  .acc-item.open .acc-body{ max-height:300px; }
-  .acc-body p{ padding:0 4px 18px; color:#6b5a7c; font-size:14px; line-height:1.9; white-space: pre-line; }
+  .acc-item.open .acc-body{ max-height:260px; }
+  .acc-body p{ padding:0 4px 18px; color:#6b5a7c; font-size:14px; line-height:1.9; }
 
   /* ---------- Cart Drawer ---------- */
   .cart-overlay{
@@ -286,7 +324,7 @@
   @media (max-width:520px){ .field-row{ grid-template-columns:1fr; } }
 
   .summary-card h3{ font-size:20px; margin-bottom:18px; }
-  .summary-item{ display:flex; justify-content:space-between; gap:10px; padding:12px 0; border-bottom:1.5px dashed var(--line); font-size:14px; }
+  .summary-item{ display:flex; justify-content:space-between; gap:10px; padding:12px 0; border-bottom:1px dashed var(--line); font-size:14px; }
   .summary-item .si-name{ font-weight:700; color:var(--purple-deep); }
   .summary-item .si-meta{ color:var(--purple-mid); font-size:12.5px; }
   .summary-total{ display:flex; justify-content:space-between; align-items:center; font-weight:800; color:var(--purple-deep); font-size:18px; margin-top:18px; padding-top:16px; border-top:1.5px solid var(--purple-deep); }
@@ -315,6 +353,53 @@
   .whatsapp-float:hover{ transform:translateY(-3px); box-shadow:0 10px 28px rgba(37,211,102,0.5); }
   .whatsapp-float svg{ flex-shrink:0; }
 
+  /* ---------- Product detail block ---------- */
+  .pd-detail-block{ margin-top:28px; }
+  .pd-detail-intro{
+    font-size:14.5px; line-height:1.95; color:var(--ink);
+    background:var(--pink-soft); border-right:4px solid var(--purple-mid);
+    padding:14px 16px; border-radius:var(--radius-sm); margin-bottom:16px;
+  }
+  .pd-benefits{ list-style:none; margin-bottom:16px; }
+  .pd-benefits li{ font-size:14px; color:var(--ink); padding:7px 0; border-bottom:1px dashed var(--line); line-height:1.7; }
+  .pd-benefits li:last-child{ border-bottom:none; }
+  .pd-meta{ list-style:none; }
+  .pd-meta li{ font-size:13.5px; color:#6b5a7c; padding:6px 0; line-height:1.7; }
+  .pd-meta li strong{ color:var(--purple-deep); }
+
+  /* ---------- Intro animation overlay ---------- */
+  #intro-overlay{
+    position:fixed; inset:0; z-index:999;
+    background:var(--white);
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column;
+    pointer-events:none;
+  }
+  #intro-overlay.done{ opacity:0; transition:opacity .4s ease .1s; pointer-events:none; }
+
+  /* The animated circle that rises */
+  #intro-circle{
+    width:220px; height:220px; border-radius:50%;
+    background:var(--purple-deep);
+    position:absolute;
+    transform:translateY(120vh) scaleX(0.6);
+    opacity:0;
+  }
+  #intro-logo-img{
+    width:100%; height:100%; border-radius:50%; object-fit:cover;
+    opacity:0; transition:opacity .3s ease;
+  }
+  #intro-ring{
+    position:absolute;
+    width:240px; height:240px; border-radius:50%;
+    border:7px solid var(--cream);
+    box-shadow:0 18px 36px rgba(76,53,101,0.3);
+    opacity:0; transform:scale(0.8);
+  }
+  /* Hero & features hide during intro */
+  #intro-hero-fade{ opacity:0; }
+  #intro-features-fade > *{ opacity:0; transform:translateY(14px); }
+
   ::-webkit-scrollbar{ width:8px; }
   ::-webkit-scrollbar-thumb{ background:var(--purple-bg); border-radius:8px; }
 
@@ -330,6 +415,14 @@
 </style>
 </head>
 <body>
+
+<!-- ===== INTRO ANIMATION OVERLAY ===== -->
+<div id="intro-overlay">
+  <div id="intro-ring"></div>
+  <div id="intro-circle">
+    <img id="intro-logo-img" src="https://i.ibb.co/Psks0pSt/1-20260723-222523-0000.png" alt="عبق">
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
@@ -351,7 +444,7 @@
 
   <!-- ============ HOME PAGE ============ -->
   <section id="page-home" class="page active">
-    <div class="hero">
+    <div class="hero" id="intro-hero-fade">
       <div class="hero-media-placeholder" id="hero-media"></div>
     </div>
 
@@ -362,7 +455,7 @@
       </div>
     </div>
 
-    <div class="features-strip">
+    <div class="features-strip" id="intro-features-fade">
       <div class="feature-chip"><span class="icon">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       </span><span class="label">مصنوع<br>بحب</span></div>
@@ -499,6 +592,25 @@
   تواصل معنا
 </a>
 
+<!-- ===== QUICK-ADD POPUP ===== -->
+<div class="qa-overlay" id="qa-overlay" onclick="closeQA()"></div>
+<div class="qa-box" id="qa-box">
+  <div class="qa-box-header">
+    <h4 id="qa-title"></h4>
+    <button class="qa-close" onclick="closeQA()">✕</button>
+  </div>
+  <div class="qa-size-label">اختاري الحجم</div>
+  <div class="qa-sizes" id="qa-sizes"></div>
+  <div class="qa-bottom">
+    <div class="qa-qty">
+      <button onclick="qaChangeQty(-1)">−</button>
+      <span id="qa-qty-val">1</span>
+      <button onclick="qaChangeQty(1)">+</button>
+    </div>
+    <button class="btn btn-primary qa-add-btn" onclick="qaAddToCart()">أضف للعربة 🛒</button>
+  </div>
+</div>
+
 <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
 <aside class="cart-drawer" id="cart-drawer">
   <div class="cart-header">
@@ -522,18 +634,19 @@
 
 <script>
 /* =========================================================================
-   إعدادات الصور
+   إعدادات الصور — ضعي روابط الصور هنا بعد رفعها على الاستضافة
+   استبدلي القيمة الفارغة "" برابط الصورة فقط، بدون تعديل أي كود آخر
    ========================================================================= */
-const HERO_IMAGE = "https://i.ibb.co/JWCd669D/IMG-20260817-084551.png";                 
-const LOGO_IMAGE  = "https://i.ibb.co/Psks0pSt/1-20260723-222523-0000.png";                 
-const PRODUCT_IMAGE_LICORICE      = "https://i.ibb.co/N2n6wKjX/1-20260811-225936-0000.png"; 
-const PRODUCT_IMAGE_COFFEE        = "https://i.ibb.co/ns81MPGv/2-20260811-225937-0001.png"; 
-const PRODUCT_IMAGE_FRANKINCENSE  = "https://i.ibb.co/mF9mQ8gP/3-20260811-225937-0002.png"; 
+const HERO_IMAGE = "https://i.ibb.co/JWCd669D/IMG-20260817-084551.png";                 // صورة الغلاف الرئيسي
+const LOGO_IMAGE  = "https://i.ibb.co/Psks0pSt/1-20260723-222523-0000.png";                 // صورة شعار عبق الدائري
+const PRODUCT_IMAGE_LICORICE      = "https://i.ibb.co/N2n6wKjX/1-20260811-225936-0000.png"; // صابونة العرقسوس
+const PRODUCT_IMAGE_COFFEE        = "https://i.ibb.co/ns81MPGv/2-20260811-225937-0001.png"; // صابونة القهوة
+const PRODUCT_IMAGE_FRANKINCENSE  = "https://i.ibb.co/mF9mQ8gP/3-20260811-225937-0002.png"; // صابونة لبان الذكر
 
 const WHATSAPP_NUMBER = "201050591215";
 
 /* =========================================================================
-   بيانات المنتجات مع الأوصاف الجديدة
+   بيانات المنتجات — يمكن إضافة منتجات جديدة بسهولة بإضافة عنصر جديد هنا
    ========================================================================= */
 const SIZES_TEMPLATE = [
   { size: "75", label: "75 جرام", price: 65, oldPrice: 80 },
@@ -545,50 +658,68 @@ const PRODUCTS = [
     id: "licorice",
     name: "صابونة العرقسوس",
     image: PRODUCT_IMAGE_LICORICE,
-    desc: "خلاصة العرقسوس غنية بمواد فعالة طبيعية بتشتغل على تقليل صبغة الميلانين وتوحيد لون البشرة بفعالية، وبتساعد على تخفيف التصبغات وآثار الحبوب بالتدريج وبأمان تام على حاجز البشرة 💜🌸",
+    desc: "",
     sizes: SIZES_TEMPLATE,
-    info: {
-      usage: `🌸 توحيد لون البشرة والتغلب على التصبغات والبقع الداكنة الناتجة عن الشمس وآثار الحبوب.
-🌸 تنظيف عميق للبشرة مع الحفاظ على ترطيبها ومنحها إشراقة ونعومة فورية.
-🌸 تهدئة البشرة وتقليل أي التهابات أو احمرار بفضل خصائصها الطبيعية اللطيفة.`,
-      ingredients: "خلاصة العرقسوس، فيتامين هـ، زيت جوز الهند، ماء ورد، عسل نحل، بانثينول، قاعدة صابون جلسرين.",
-      instructions: "مرتين يومياً صباحاً ومساءً، ونندلك دقيقا عشان يمتص وكده."
-    }
+    detail: `<p class="pd-detail-intro">خلاصة العرقسوس غنية بمواد فعالة طبيعية بتشتغل على تقليل صبغة الميلانين وتوحيد لون البشرة بفعالية، وبتساعد على تخفيف التصبغات وآثار الحبوب بالتدريج وبأمان تام على حاجز البشرة 💜🌸</p>
+<ul class="pd-benefits">
+<li>🌸 توحيد لون البشرة والتغلب على التصبغات والبقع الداكنة الناتجة عن الشمس وآثار الحبوب.</li>
+<li>🌸 تنظيف عميق للبشرة مع الحفاظ على ترطيبها ومنحها إشراقة ونعومة فورية.</li>
+<li>🌸 تهدئة البشرة وتقليل أي التهابات أو احمرار بفضل خصائصها الطبيعية اللطيفة.</li>
+</ul>
+<ul class="pd-meta">
+<li>🌸 <strong>الاستخدام:</strong> مرتين يومياً صباحاً ومساءً، ونندلك دقيقا عشان يمتص وكده.</li>
+<li>🌸 <strong>المكونات:</strong> خلاصة العرقسوس، فيتامين هـ، زيت جوز الهند، ماء ورد، عسل نحل، بانثينول، قاعدة صابون جلسرين.</li>
+<li>🌸 مناسبة لجميع أنواع البشرة.</li>
+<li>🌸 يُستحسن تجربتها على جزء صغير من البشرة أولا.</li>
+<li>🌸 تُحفظ في مكان جاف بعيدًا عن الماء.</li>
+</ul>`,
   },
   {
     id: "coffee",
     name: "صابونة القهوة",
     image: PRODUCT_IMAGE_COFFEE,
-    desc: "غنية بمضادات الأكسدة القوية والكافيين اللي بينشط الدورة الدموية في البشرة، وبيقبض الأوعية الدموية عشان يقلل الانتفاخات والورم الصباحي ويدي البشرة صحيان ونضارة فورية 💜🌸",
+    desc: "",
     sizes: SIZES_TEMPLATE,
-    info: {
-      usage: `🌸 محاربة الإجهاد اليومي وعوامل التلوث وحماية خلايا البشرة بفضل مضادات الأكسدة القوية.
-🌸 تنشيط الدورة الدموية وتقليل انتفاخات الوجه والعيون ومنح البشرة نضارة وGlow fوري.
-🌸 تنظيف البشرة وإنعاشها بعمق وترطيبها بدون أي جفاف لتكون مرتاحة وناعمة طوال اليوم.`,
-      ingredients: "خلاصة القهوة، فيتامين هـ، زيت جوز الهند، ماء ورد، عسل نحل، بانثينول، قاعدة صابون جلسرين.",
-      instructions: "مرتين يومياً صباحاً ومساءً، ونندلك دقيقا عشان يمتص وكده."
-    }
+    detail: `<p class="pd-detail-intro">غنية بمضادات الأكسدة القوية والكافيين اللي بينشط الدورة الدموية في البشرة، وبيقبض الأوعية الدموية عشان يقلل الانتفاخات والورم الصباحي ويدي البشرة صحيان ونضارة فورية 💜🌸</p>
+<ul class="pd-benefits">
+<li>🌸 محاربة الإجهاد اليومي وعوامل التلوث وحماية خلايا البشرة بفضل مضادات الأكسدة القوية.</li>
+<li>🌸 تنشيط الدورة الدموية وتقليل انتفاخات الوجه والعيون ومنح البشرة نضارة وGlow فوري.</li>
+<li>🌸 تنظيف البشرة وإنعاشها بعمق وترطيبها بدون أي جفاف لتكون مرتاحة وناعمة طوال اليوم.</li>
+</ul>
+<ul class="pd-meta">
+<li>🌸 <strong>الاستخدام:</strong> مرتين يومياً صباحاً ومساءً، ونندلك دقيقا عشان يمتص وكده.</li>
+<li>🌸 <strong>المكونات:</strong> خلاصة القهوة، فيتامين هـ، زيت جوز الهند، ماء ورد، عسل نحل، بانثينول، قاعدة صابون جلسرين.</li>
+<li>🌸 مناسبة لجميع أنواع البشرة.</li>
+<li>🌸 يُستحسن تجربتها على جزء صغير من البشرة أولا.</li>
+<li>🌸 تُحفظ في مكان جاف بعيدًا عن الماء.</li>
+</ul>`,
   },
   {
     id: "frankincense",
     name: "صابونة لبان الذكر",
     image: PRODUCT_IMAGE_FRANKINCENSE,
-    desc: "تحتوي على حمض البوسويليك الفعال اللي بيحفز إنتاج الكولاجين الطبيعي في البشرة، وبيتغلغل بعمق عشان يشد الجلد ويحارب الخطوط الدقيقة بانتظام للحفاظ على شباب البشرة ومرونتها 💜🌸",
+    desc: "",
     sizes: SIZES_TEMPLATE,
-    info: {
-      usage: `🌸 تحفيز إنتاج الكولاجين الطبيعي لشد البشرة وتقليل مظهر الخطوط الدقيقة والتجاعيد.
-🌸 منح البشرة صفاء ونقاء زجاجي وتفتيح وتوحيد لونها بمظهر صحي ومنور.
-🌸 تنظيف البشرة بعمق وفعالية مع ضمان نعومتها ومرونتها بدون أي إحساس بالشد.`,
-      ingredients: "خلاصة لبان الذكر، فيتامين هـ، زيت جوز الهند، ماء ورد، عسل نحل، بانثينول، قاعدة صابون جلسرين.",
-      instructions: "مرتين يومياً صباحاً ومساءً، ونندلك دقيقا عشان يمتص وكده."
-    }
+    detail: `<p class="pd-detail-intro">تحتوي على حمض البوسويليك الفعال اللي بيحفز إنتاج الكولاجين الطبيعي في البشرة، وبيتغلغل بعمق عشان يشد الجلد ويحارب الخطوط الدقيقة بانتظام للحفاظ على شباب البشرة ومرونتها 💜🌸</p>
+<ul class="pd-benefits">
+<li>🌸 تحفيز إنتاج الكولاجين الطبيعي لشد البشرة وتقليل مظهر الخطوط الدقيقة والتجاعيد.</li>
+<li>🌸 منح البشرة صفاء ونقاء زجاجي وتفتيح وتوحيد لونها بمظهر صحي ومنور.</li>
+<li>🌸 تنظيف البشرة بعمق وفعالية مع ضمان نعومتها ومرونتها بدون أي إحساس بالشد.</li>
+</ul>
+<ul class="pd-meta">
+<li>🌸 <strong>الاستخدام:</strong> مرتين يومياً صباحاً ومساءً، ونندلك دقيقا عشان يمتص وكده.</li>
+<li>🌸 <strong>المكونات:</strong> خلاصة لبان الذكر، فيتامين هـ، زيت جوز الهند، ماء ورد، عسل نحل، بانثينول، قاعدة صابون جلسرين.</li>
+<li>🌸 مناسبة لجميع أنواع البشرة.</li>
+<li>🌸 يُستحسن تجربتها على جزء صغير من البشرة أولا.</li>
+<li>🌸 تُحفظ في مكان جاف بعيدًا عن الماء.</li>
+</ul>`,
   }
 ];
 
 /* =========================================================================
    الحالة العامة
    ========================================================================= */
-let cart = [];              
+let cart = [];              // {key, productId, name, size, sizeLabel, price, qty, image}
 let currentProductId = null;
 let selectedSize = null;
 let currentQty = 1;
@@ -643,7 +774,10 @@ function renderHome(){
         <h3>${p.name}</h3>
         <div class="badge-offer">عرض افتتاحي</div>
         <div class="product-price">${s1.price} / ${s2.price} جنيه</div>
-        <button class="btn btn-outline" onclick="event.stopPropagation(); navigate('product','${p.id}')">عرض المنتج</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+          <button class="btn btn-outline" style="flex:1;min-width:110px;font-size:13px;padding:11px 14px;" onclick="event.stopPropagation(); navigate('product','${p.id}')">عرض المنتج</button>
+          <button class="btn btn-primary" style="flex:1;min-width:110px;font-size:13px;padding:11px 14px;" onclick="event.stopPropagation(); openQA('${p.id}')">أضف للعربة 🛒</button>
+        </div>
       </div>
     </div>`;
   }).join('');
@@ -661,7 +795,7 @@ function openProduct(id){
 
   document.getElementById('pd-media').innerHTML = mediaBlock(p.image);
   document.getElementById('pd-title').textContent = p.name;
-  document.getElementById('pd-desc').textContent = p.desc;
+  const descEl = document.getElementById('pd-desc'); descEl.style.display = p.desc ? 'block' : 'none'; descEl.textContent = p.desc;
   document.getElementById('qty-val').textContent = currentQty;
 
   document.getElementById('size-options').innerHTML = p.sizes.map(s => `
@@ -672,20 +806,7 @@ function openProduct(id){
     </div>
   `).join('');
 
-  document.getElementById('pd-accordion').innerHTML = `
-    <div class="acc-item">
-      <button class="acc-header" onclick="toggleAcc(this)">الفوائد والمميزات <span class="acc-icon">+</span></button>
-      <div class="acc-body"><p>${p.info.usage}</p></div>
-    </div>
-    <div class="acc-item">
-      <button class="acc-header" onclick="toggleAcc(this)">المكونات <span class="acc-icon">+</span></button>
-      <div class="acc-body"><p>${p.info.ingredients}</p></div>
-    </div>
-    <div class="acc-item">
-      <button class="acc-header" onclick="toggleAcc(this)">طريقة الاستخدام <span class="acc-icon">+</span></button>
-      <div class="acc-body"><p>${p.info.instructions}</p></div>
-    </div>
-  `;
+  document.getElementById('pd-accordion').innerHTML = `<div class="pd-detail-block">${p.detail}</div>`;
 }
 
 function selectSize(size){
@@ -900,8 +1021,72 @@ function showToast(msg){
 /* =========================================================================
    تشغيل أولي
    ========================================================================= */
+/* =========================================================================
+   Quick-Add Popup
+   ========================================================================= */
+let qaProductId = null;
+let qaSelectedSize = null;
+let qaQty = 1;
+
+function openQA(id){
+  const p = PRODUCTS.find(x => x.id === id);
+  if(!p) return;
+  qaProductId = id;
+  qaSelectedSize = p.sizes[0].size;
+  qaQty = 1;
+  document.getElementById('qa-title').textContent = p.name;
+  document.getElementById('qa-qty-val').textContent = qaQty;
+  document.getElementById('qa-sizes').innerHTML = p.sizes.map(s => `
+    <div class="qa-size-opt ${s.size === qaSelectedSize ? 'selected' : ''}" data-size="${s.size}" onclick="qaSelectSize('${s.size}')">
+      <span class="qsz-badge">عرض افتتاحي</span>
+      <div class="qsz-label">${s.label}</div>
+      <div class="qsz-price">${s.price} جنيه <span class="qsz-old">${s.oldPrice} جنيه</span></div>
+    </div>
+  `).join('');
+  document.getElementById('qa-overlay').classList.add('active');
+  document.getElementById('qa-box').classList.add('active');
+}
+
+function closeQA(){
+  document.getElementById('qa-overlay').classList.remove('active');
+  document.getElementById('qa-box').classList.remove('active');
+}
+
+function qaSelectSize(size){
+  qaSelectedSize = size;
+  document.querySelectorAll('.qa-size-opt').forEach(el => {
+    el.classList.toggle('selected', el.dataset.size === size);
+  });
+}
+
+function qaChangeQty(delta){
+  qaQty = Math.max(1, qaQty + delta);
+  document.getElementById('qa-qty-val').textContent = qaQty;
+}
+
+function qaAddToCart(){
+  const p = PRODUCTS.find(x => x.id === qaProductId);
+  const sizeObj = p.sizes.find(s => s.size === qaSelectedSize);
+  const key = p.id + '-' + sizeObj.size;
+  const existing = cart.find(i => i.key === key);
+  if(existing){ existing.qty += qaQty; }
+  else {
+    cart.push({ key, productId:p.id, name:p.name, size:sizeObj.size, sizeLabel:sizeObj.label, price:sizeObj.price, qty:qaQty, image:p.image });
+  }
+  renderCart();
+  closeQA();
+  showToast('تمت إضافة المنتج إلى العربة');
+}
+
 renderHome();
 renderCart();
-</script>
-</body>
-</html>
+
+/* =========================================================================
+   أنيميشن الافتتاح
+   ========================================================================= */
+(function runIntro(){
+  // Water drop sound
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    function dropSound(){
+  
